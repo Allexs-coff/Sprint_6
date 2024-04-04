@@ -4,6 +4,8 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.Mockito;
+
+import java.util.Collections;
 import java.util.List;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
@@ -39,12 +41,25 @@ public class LionTest {
     public void getKittensTest()  {
         assertEquals(lion.getKittens(),1);
         verify(lion,Mockito.times(1)).getKittens();
-
     }
+
+    @Test
+    public void getKittensStub() throws Exception {
+        Mockito.when(feline.getKittens()).thenReturn(100500);
+        Lion lionTestStab = new Lion("Самец",feline);
+        assertEquals(lionTestStab.getKittens(), 100500);
+    }
+
 
     @Test
     public void getFoodTest() throws Exception {
         assertEquals(lion.getFood(), List.of("Животные", "Птицы", "Рыба"));
         verify(lion,Mockito.times(1)).getFood();
+    }
+    @Test
+    public void testLionStub() throws Exception {
+        Mockito.when(feline.getFood("Хищник")).thenReturn(Collections.singletonList("не хищник"));
+        Lion lionTestStab = new Lion("Самец",feline);
+        assertEquals(lionTestStab.getFood(), Collections.singletonList("не хищник"));
     }
 }
